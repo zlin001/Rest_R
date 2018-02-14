@@ -11,4 +11,4 @@ text = "Compatibility of systems of linear constraints over the set of natural n
        "systems and systems of mixed types."
 
 r.extract_keywords_from_text(text)
-print(r.get_ranked_phrases())
+print(r.get_ranked_phrases_with_scores())

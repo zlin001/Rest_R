@@ -24,4 +24,9 @@ def crawl_pages(base_url):
     return reviews_in_page
 
 url = "https://www.yelp.com/biz/duzan-mediterranean-grill-astoria?start="
-print(crawl_pages(url))
+#print(crawl_pages(url))
+reviews = crawl_pages(url)
+f = open('reviews.txt','r+')
+for i in range(len(reviews)):
+    f.write(reviews[i])
+f.close()
