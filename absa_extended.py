@@ -11,12 +11,16 @@ all_sentiments = []
 with open('reviews_clean.txt', 'r') as f_reviews:
     all_reviews = f_reviews.read().splitlines()
     for review in all_reviews:
-        # print(type(review))
+        indiv_sentiment = []
         try:
             absa = client.AspectBasedSentiment({'domain': 'restaurants', 'text': review })
             for aspect in absa['aspects']:
-                all_sentiments.append(aspect)
+                indiv_sentiment.append(aspect)
+            all_sentiments.append(indiv_sentiment)
         except:
             print(type(review))
 
-print(all_sentiments)
+for sentiment in all_sentiments:
+    print(sentiment)
+    print("\n")
+    print("\n")
