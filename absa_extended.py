@@ -8,7 +8,7 @@ client = textapi.Client(" 51c406ea", " 06f281d46fe40eac69fcbd4170ca9b33")
 
 all_sentiments = []
 
-with open('reviews_clean.txt', 'r') as f_reviews:
+with open('reviews_clean.txt', 'rb') as f_reviews:
     all_reviews = f_reviews.read().splitlines()
     for review in all_reviews:
         # print(type(review))
