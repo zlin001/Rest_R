@@ -19,8 +19,8 @@ with open('reviews_clean.txt', 'rb') as f_reviews:
             all_sentiments.append(indiv_sentiment)
         except:
             print(type(review))
-
-for sentiment in all_sentiments:
-    print(sentiment)
-    print("\n")
-    print("\n")
+with open('sentiment.txt', 'w') as f_sent:
+    for sentiment in all_sentiments:
+        for s in sentiment:
+            f_sent.write(str(s))
+            f_sent.write("\n")
