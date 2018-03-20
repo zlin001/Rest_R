@@ -57,7 +57,9 @@ def calculation_threshold_aspect(aspects,all_sent,count_aspects):
     # we average them, which it is our threshold
     for aspect in aspects:
         aspects[aspect] = aspects[aspect] / count_aspects[aspect]
+# this function will convert the deci to start
 def convert_deci_star(aspects_filter,aspects_star):
+    # we decide, 0 - 0.2 are 1 star, 0.2 - 0.4 are 2 star and so on.
     for aspect in aspects_filter:
         if aspects_filter[aspect] < 0.2:
             aspects_star[aspect] = 1
@@ -93,7 +95,11 @@ with open('sentiment.txt', 'rb') as f_sent:
         separate_aspect_with_threshold(eval(sent),aspects_threshold,aspects_filter,count_aspects_filter)
     # then we calculation the rating with threshold and filter version of aspect and count
     calculation_filter_with_threshold(aspects_threshold,aspects_filter,all_sent,count_aspects_filter)
+    # we initialize a dictionary for save star
     aspect_star = {}
+    # we call the function
     convert_deci_star(aspects_filter,aspect_star)
+# result of deci
 print(aspects_filter)
+# result of star
 print(aspect_star)
