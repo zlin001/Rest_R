@@ -100,6 +100,9 @@ with open('sentiment.txt', 'rb') as f_sent:
     # we call the function
     convert_deci_star(aspects_filter,aspect_star)
 # result of deci
-print(aspects_filter)
+#print(aspects_filter)
 # result of star
-print(aspect_star)
+#print(aspect_star)
+for i,x in zip(aspects_filter,count_aspects_filter):
+    output = i + ":" + str(aspect_star[i]) + "(" + str(count_aspects_filter[x]) + ")"
+    print(output)
