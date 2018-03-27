@@ -47,14 +47,20 @@ for grams in bigrams:
     else:
         # no we set it as new index which value of frequency is 1
         words_dic_bi[result] = 1
+# print bigrams
 print(words_dic_bi)
 # same applied here for it is for unigram.
 unigrams = ngrams(filtered_review, 1)
+# loop the result
 for grams in unigrams:
-    result = ""
-    result += grams[0]
+    # since it is unigram, one, therefore, we set it to index(0)
+    result = grams[0]
+    # check if it exist in the container
     if result in words_dic:
+        # yes we increased frequency
         words_dic[result] += 1
     else:
+        # no we initilize the word, with one frequency
         words_dic[result] = 1
+# print the words for unqigram
 print(words_dic)
