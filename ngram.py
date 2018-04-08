@@ -56,5 +56,25 @@ gram_generator(filtered_review, 1, words_dic)
 #print(words_dic)
 
 """Above the stuff are for all review, below are for each single review"""
+def normalization(dic):
+    for key in dic:
+        if dic[key] > 0:
+            dic[key] = dic[key] / len(dic)
+container_gram = []
+# get a copy from word_dic
+word_dic_temp = words_dic.copy()
 for review in reviews:
-    print(review)
+    # string to list
+    word_tokens = word_tokenize(review)
+    # filter out the review
+    filtered_review = [w for w in word_tokens if not w in stop_words]
+    # set to zero for all keys
+    mofi_to_zero(word_dic_temp)
+    # call the function to generate the gram vector
+    gram_generator(filtered_review, 1, word_dic_temp)
+    # normalization
+    normalization(word_dic_temp)
+    # and save in an array
+    container_gram.append(word_dic_temp)
+
+print(container_gram[0])
