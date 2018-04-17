@@ -1,66 +1,89 @@
 from nltk import ngrams
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
-review = "If you're looking to satisfy your craving for kebabs, but also feel like being a cheapo, this is the place for you!For about 10 bucks (or less!), you can get a super hearty meal with any protein of your choice, or you can even mix it up. I got the lamb kebab and beef kofta platter ($10), which comes with a total of 2 skewers of meat, a lot of brown rice, and a salad on the side. The lamb was super tender and delicious, and the beef was just as delicious! The food was certainly plentiful and left me more than satisfied. Definitely got the most bang for my buck!The place is far from fancy, and is more like an Afghan fast food joint where they have a variety of options besides kebabs such as cheeseburgers, wings, fries, etc. There's also a small parking lot right in front of the restaurant (enough for 5-6 cars).CASH ONLY!"
+# getting all reviews
+f_reviews = open('Package/reviews_clean.txt','r',encoding='windows-1252')
+# all review in one string
+all_review = f_reviews.read()
+f_reviews.close()
 
+# getting all reviews
+f_reviews = open('Package/reviews_clean.txt','r',encoding='windows-1252')
+# spit the review
+reviews = f_reviews.read().splitlines()
+f_reviews.close()
+
+# container of word and frequency
+words_dic = {}
+words_dic_bi = {}
 # load the stopword from the library of nltk
 stop_words = set(stopwords.words('english'))
 # string to list
-word_tokens = word_tokenize(review)
+word_tokens = word_tokenize(all_review)
 # filter out the review
 filtered_review = [w for w in word_tokens if not w in stop_words]
 # print the size of review
 #print(len(review))
 # print the size of after removing stopword
 #print(len(filtered_reivew))
-# define a list for contain the stopword from file
-stopword_from_file = []
-# open the file and save the stopword into the list
-with open('StopWordList.txt', 'r') as f_stopword:
-    # read line by line
-    all_stopwords = f_stopword.read().splitlines()
-    # for loop each word
-    for stopword in all_stopwords:
-        # add to list
-        stopword_from_file.append(stopword)
-# filtering
-filtered_review_file = [w for w in word_tokens if not w in stopword_from_file]
-# print the size of review with removing stopword from file
-#print(len(filtered_review_file))
-# container of word and frequency
-words_dic = {}
-words_dic_bi = {}
 # call the ngram function with n = 2 which represent bigrams
-bigrams = ngrams(filtered_review, 2)
-# loop the result from ngram function
-for grams in bigrams:
-    # result in string
-    result = ""
-    # since it is bigram, we need to loop the grams for each word
-    for gram in grams:
-        # we add into result which it become a complete string with two words
-        result += gram + " "
-    # check if it is in the container
-    if result in words_dic_bi:
-        # yes we add frequency
-        words_dic_bi[result] += 1
-    else:
-        # no we set it as new index which value of frequency is 1
-        words_dic_bi[result] = 1
+def gram_generator(data, n, container):
+    bigrams = ngrams(data, n)
+    # loop the result from ngram function
+    for grams in bigrams:
+        # result in string
+        result = ""
+        # for more than one gram, we need to loop the grams for each word
+        for gram in grams:
+            # we add into result which it become a complete string with two words
+            result += gram + " "
+            # check if it is in the container
+        if result in container:
+            # yes we add frequency
+            container[result] += 1
+        else:
+            # no we set it as new index which value of frequency is 1
+            container[result] = 1
+# make the value of all key in dict to 0
+def mofi_to_index(dict):
+    count = 0
+    for key in dict:
+        dict[key] = count
+        count = count + 1
+
+def mofi_to_zero(dict):
+    for key in dict:
+        dict[key] = 0
+gram_generator(filtered_review, 2, words_dic_bi)
+gram_generator(filtered_review, 1, words_dic)
+mofi_to_index(words_dic)
+# print all words
+# print(words_dic)
 # print bigrams
-print(words_dic_bi)
-# same applied here for it is for unigram.
-unigrams = ngrams(filtered_review, 1)
-# loop the result
-for grams in unigrams:
-    # since it is unigram, one, therefore, we set it to index(0)
-    result = grams[0]
-    # check if it exist in the container
-    if result in words_dic:
-        # yes we increased frequency
-        words_dic[result] += 1
-    else:
-        # no we initilize the word, with one frequency
-        words_dic[result] = 1
+#print(words_dic_bi)
 # print the words for unqigram
-print(words_dic)
+#print(words_dic)
+
+"""Above the stuff are for all review, below are for each single review"""
+def normalization(dic):
+    for key in dic:
+        if dic[key] > 0:
+            dic[key] = dic[key] / len(dic)
+container_gram = []
+# get a copy from word_dic
+word_dic_temp = words_dic.copy()
+for review in reviews:
+    # string to list
+    word_tokens = word_tokenize(review)
+    # filter out the review
+    filtered_review = [w for w in word_tokens if not w in stop_words]
+    # set to zero for all keys
+    mofi_to_zero(word_dic_temp)
+    # call the function to generate the gram vector
+    gram_generator(filtered_review, 1, word_dic_temp)
+    # normalization
+    normalization(word_dic_temp)
+    # and save in an array
+    container_gram.append(word_dic_temp)
+
+# print(container_gram)
