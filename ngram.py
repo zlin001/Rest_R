@@ -45,11 +45,20 @@ def gram_generator(data, n, container):
             # no we set it as new index which value of frequency is 1
             container[result] = 1
 # make the value of all key in dict to 0
+def mofi_to_index(dict):
+    count = 0
+    for key in dict:
+        dict[key] = count
+        count = count + 1
+
 def mofi_to_zero(dict):
     for key in dict:
         dict[key] = 0
 gram_generator(filtered_review, 2, words_dic_bi)
 gram_generator(filtered_review, 1, words_dic)
+mofi_to_index(words_dic)
+# print all words
+# print(words_dic)
 # print bigrams
 #print(words_dic_bi)
 # print the words for unqigram
@@ -77,4 +86,4 @@ for review in reviews:
     # and save in an array
     container_gram.append(word_dic_temp)
 
-print(container_gram[0])
+# print(container_gram)
