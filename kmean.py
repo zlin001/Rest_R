@@ -42,7 +42,7 @@ import numpy as numpy
 from sklearn.cluster import KMeans
 import numpy as np
 X = [numpy.array(f) for f in [[2, 1], [1, 3], [4, 7], [6, 7]]]
-kmeans = KMeans(n_clusters=2, random_state=0).fit(X)
+kmeans = KMeans(n_clusters=4, random_state=0).fit(X)
 print(kmeans.labels_)
 kmeans.predict([[0, 0], [4, 4]])
 print(kmeans.cluster_centers_)
