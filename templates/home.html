@@ -12,8 +12,14 @@
         <div class="grid_12">
           <h2 class="logo"><span>Yelp Rating System</span></h2>
           <div>
-            <input type="text" placeholder="Search by zip code">
-            <button type="submit"><i class="fa fa-search"></i></button>
+            <form action="{{ url_for('enter_zip_code') }}" method="POST">
+              <br/>
+              <input name="zip_code" type="number">Enter zip code.</textarea>
+              <br/>
+              <input type="submit" placeholder="Search by zip code" value="Enter Zip Code">
+            </form>
+            <!-- <input type="text" placeholder="Search by zip code">
+            <button type="submit"><i class="fa fa-search"></i></button> -->
           </div>
         </div>
       </div>
