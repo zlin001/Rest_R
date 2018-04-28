@@ -121,3 +121,19 @@ def filter_zero_centers_index(cluster_centers):
 non_zero_index_center = filter_zero_centers_index(kmeans.cluster_centers_)
 #print(non_zero_index_center[0])
 def find_words_index(index_array):
+    result = []
+    for i in index_array:
+        words = []
+        for j in range(len(i)):
+            for key in words_dic:
+                if words_dic[key] == i[j]:
+                    words.append(key)
+        result.append(words.copy())
+    return result
+feature_words = find_words_index(non_zero_index_center)
+print(feature_words[0])
+# test = True
+# for i in range(len(feature_words)):
+#     if len(feature_words[i]) != len(non_zero_index_center[i]):
+#         test = False
+# print(test)
