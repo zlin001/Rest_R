@@ -40,15 +40,20 @@ url = "https://www.yelp.com/biz/aria-kabab-flushing-3?start="
 
 all_rests_urls = get_30_rests_urls()
 
-f = open('reviews_clean.txt','r+')
-
+file_count = 0
 for url in all_rests_urls:
+    print(file_count)
+    # # file_name = "file_name" + str(file_count) + ".txt"
+    # file_count += 1
+
     url = re.sub("\?(.*)", '', url)
     url = url + "?start="
-
     reviews = crawl_pages(url)
-    for review in reviews:
-        print(review.encode("utf-8"))
+
+    f = open("all_reviews.txt",'ab+')
+    for i in range(len(reviews)):
+        f.write((reviews[i] + '\n').encode("utf-8"))
+    f.close()
 
 
 # reviews = crawl_pages(url)
