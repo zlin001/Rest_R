@@ -1,7 +1,6 @@
 from nltk import ngrams
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
-from sklearn.cluster import KMeans
 """Citation:Minqing Hu and Bing Liu. "Mining and Summarizing Customer Reviews."
 ;       Proceedings of the ACM SIGKDD International Conference on Knowledge
 ;       Discovery and Data Mining (KDD-2004), Aug 22-25, 2004, Seattle,
@@ -20,12 +19,20 @@ for review in reviews:
     array_word_tokens.append(word_tokens.copy())
 
 # function: collecting the score for each review (postive and negative)
-def scan_popularity(array_words,f_name):
+def scan_popularity(array_words,f_name,f_inc,f_dec):
     # based on the input, collect the score for positive of negative
     f_popularity = open(f_name,'r',encoding='windows-1252')
     # spit the review
     popularity_words = f_popularity.read().splitlines()
     f_popularity.close()
+    f_inc_abverbs = open(f_inc,'r',encoding='windows-1252')
+    # spit the review
+    inc_abverbs = f_inc_abverbs.read().splitlines()
+    f_inc_abverbs.close()
+    f_dec_abverbs = open(f_dec,'r',encoding='windows-1252')
+    # spit the review
+    dec_abverbs = f_dec_abverbs.read().splitlines()
+    f_dec_abverbs.close()
     # score of popularity
     score = 0
     # score of inverted popularity
@@ -40,8 +47,13 @@ def scan_popularity(array_words,f_name):
                 inv_score = inv_score + 1
             # else
             else:
-                # adding the score by 1
-                score = score + 1
+                if array_words[i-1] in inc_abverbs:
+                    score = score + 2
+                elif array_words[i-1] in dec_abverbs:
+                    score = score + 0.5
+                else:
+                    # adding the score by 1
+                    score = score + 1
             #print(word)
     return score, inv_score
 # this function does calculation of score
@@ -70,9 +82,9 @@ def score_reviews(array_word_tokens):
     #we loop them
     for i in range(len(array_word_tokens)):
         # call the positve popularity function
-        p_score, p_invi = scan_popularity(array_word_tokens[i],"positive_words.txt")
+        p_score, p_invi = scan_popularity(array_word_tokens[i],"positive_words.txt","inc_words.txt","dec_words.txt")
         # call the negative popularity function
-        n_score, n_invi = scan_popularity(array_word_tokens[i],"negative_words.txt")
+        n_score, n_invi = scan_popularity(array_word_tokens[i],"negative_words.txt","inc_words.txt","dec_words.txt")
         # add result to container.
         score_container.append(scoring_one(p_score,n_score,p_invi,n_invi))
     # return the final score and the container that contained score of each review
