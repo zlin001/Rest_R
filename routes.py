@@ -12,9 +12,9 @@ def top_ten_rests():
     all_restaurant_urls = find_all_rests(str(zip_code))
     return render_template("top_ten_rests.html", top10=all_restaurant_urls)
 
-@app.route('/restaurant')
+@app.route('/restaurant/<restaurant_info>')
 def restaurant(restaurant_info):
-
+    restaurant_info= {"rank": 1, "name": "Aria", "phone": 6461235344, "categories": {"taste": 3, "decor": 5, "style": 1.3}, "location": "135-34 booth memorial ave flushing ny 11355"}
     return render_template("restaurant.html", restaurant_info=restaurant_info)
 
 
