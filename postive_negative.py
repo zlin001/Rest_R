@@ -110,12 +110,12 @@ def all_scores(i):
     score_container, all_score = score_reviews(array_word_tokens)
     return score_container, all_score
 
-for i in range(31):
-    score_container, all_score = all_scores(i)
-    review_score_containter_all.append(score_container)
-    final_score_container_all.append(all_score)
-
-print(review_score_containter_all[0])
-print(final_score_container_all[0])
-
-f_reviews_score = open("reviews_score.txt",'w',encoding='windows-1252')
+with open("reviews_score.txt",'w',encoding='windows-1252') as f_reviews_score, open("final_score.txt",'w',encoding="windows-1252") as f_final_score:
+    for i in range(31):
+        score_container, all_score = all_scores(i)
+        f_reviews_score.write(str(score_container) + "\n")
+        f_final_score.write(str(all_score) + "\n")
+        review_score_containter_all.append(score_container)
+        final_score_container_all.append(all_score)
+# print(review_score_containter_all[0])
+# print(final_score_container_all[0])
