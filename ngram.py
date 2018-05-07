@@ -2,6 +2,7 @@ from nltk import ngrams
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from sklearn.cluster import KMeans
+from nltk import pos_tag
 import numpy as np
 # getting all reviews
 f_reviews = open('Package/reviews_clean.txt','r',encoding='windows-1252')
@@ -21,6 +22,7 @@ words_dic_bi = {}
 stop_words = set(stopwords.words('english'))
 # string to list
 word_tokens = word_tokenize(all_review)
+#test = pos_tag(word_tokens)
 # filter out the review
 filtered_review = [w for w in word_tokens if not w in stop_words]
 # print the size of review
@@ -106,7 +108,7 @@ def get_frequncy_array(dict):
 fre_array = get_frequncy_array(container_gram)
 #print(len(fre_array[0]))
 kmeans = KMeans(n_clusters=6, random_state=0).fit(fre_array)
-print(kmeans.labels_)
+#print(kmeans.labels_)
 #for i in kmeans.cluster_centers_[0]:
      #print(i)
 def filter_zero_centers_index(cluster_centers):
@@ -131,7 +133,7 @@ def find_words_index(index_array):
         result.append(words.copy())
     return result
 feature_words = find_words_index(non_zero_index_center)
-print(feature_words[0])
+#print(feature_words[0])
 # test = True
 # for i in range(len(feature_words)):
 #     if len(feature_words[i]) != len(non_zero_index_center[i]):

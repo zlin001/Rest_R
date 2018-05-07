@@ -1,3 +1,3 @@
-from nltk.corpus import wordnet as wn
+from nltk.corpus import wordnet
 
-print(wn.synsets('small'))
+print(wordnet.synsets('pig'))
