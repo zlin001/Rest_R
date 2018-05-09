@@ -10,6 +10,8 @@ import win_unicode_console
 def crawl_pages(base_url):
     count = 0
     reviews_in_page = []
+    review_name_text = []
+
     next_button = True
 
     crawl_start_time = time.time()
@@ -30,11 +32,10 @@ def crawl_pages(base_url):
 
         elapsed_time = time.time() - crawl_start_time
 
-    print(base_url, elapsed_time)
-    print("\n")
+    review_name_text.append(base_url)
+    review_name_text.append(reviews_in_page)
 
-    print(reviews_in_page)
-    return reviews_in_page
+    return review_name_text
 
 def get_30_rests_urls():
     headers = {"Authorization":"Bearer 5uVEBGiZ40XPkmlPEw-fb478unHY3MG2j2KvwVNcQF61OUjLs1lwjWTDIZfHgRwzcf3aWC7McbdWqs4qz-Z3XB0HGR7rOsxD-sbQsbbOeMfl8c8xNoGW3Sbv4NvUWnYx"}
@@ -58,14 +59,14 @@ if __name__ == '__main__':
         url = re.sub("\?(.*)", '', url)
         url = url + "?start="
         fixed_urls.append(url)
+
     with Pool(35) as p:
-        results = p.map(crawl_pages, fixed_urls)
+        all_reviews = p.map(crawl_pages, fixed_urls)
         p.terminate()
         p.join()
+
+    print(all_reviews)
 
     elapsed_time = time.time() - start_time
 
     print(elapsed_time/60)
-
-
-    # print(reviews)
