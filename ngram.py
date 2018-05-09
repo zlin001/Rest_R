@@ -5,13 +5,13 @@ from sklearn.cluster import KMeans
 from nltk import pos_tag
 import numpy as np
 # getting all reviews
-f_reviews = open('Package/reviews_clean.txt','r',encoding='windows-1252')
+f_reviews = open('all_reviews/all_reviews.txt','r',encoding='utf-8')
 # all review in one string
 all_review = f_reviews.read()
 f_reviews.close()
 
 # getting all reviews
-f_reviews = open('Package/reviews_clean.txt','r',encoding='windows-1252')
+f_reviews = open('all_reviews/file_name30.txt','r',encoding='windows-1252')
 # spit the review
 reviews = f_reviews.read().splitlines()
 f_reviews.close()
@@ -65,7 +65,8 @@ gram_generator(filtered_review, 2, words_dic_bi)
 gram_generator(filtered_review, 1, words_dic)
 mofi_to_index(words_dic)
 # print all words
-#print(words_dic)
+# print(words_dic)
+# print(len(words_dic))
 # print bigrams
 #print(words_dic_bi)
 # print the words for unqigram
@@ -80,23 +81,44 @@ container_gram = []
 # get a copy from word_dic
 word_dic_temp = words_dic.copy()
 # count = 0
+# print(len(word_dic_temp))
+def review_array_generator(data, n, container):
+    bigrams = ngrams(data, n)
+    # loop the result from ngram function
+    for grams in bigrams:
+        # result in string
+        result = ""
+        # for more than one gram, we need to loop the grams for each word
+        for gram in grams:
+            # we add into result which it become a complete string with two words
+            result += gram
+            if n > 1:
+                result += " "
+            # check if it is in the container
+        if n > 1:
+            result = result[:-1]
+        if result in container:
+            # yes we add frequency
+            container[result] += 1
+
 for review in reviews:
     # string to list
     word_tokens = word_tokenize(review)
     # filter out the review
-    filtered_review = [w for w in word_tokens if not w in stop_words]
+    filtered_review_each = [w for w in word_tokens if not w in stop_words]
     # set to zero for all keys
     mofi_to_zero(word_dic_temp)
     # call the function to generate the gram vector
-    gram_generator(filtered_review, 1, word_dic_temp)
+    review_array_generator(filtered_review_each, 1, word_dic_temp)
     # normalization
     normalization(word_dic_temp)
+    #print(len(word_dic_temp))
     # if count == 0:
     #     test = word_dic_temp.copy()
     # count += 1
     # and save in an array
     container_gram.append(word_dic_temp.copy())
-# print(container_gram[0] == test)
+# print(len(container_gram))
 def get_frequncy_array(dict):
     frequency_array = []
     for i in dict:
@@ -106,7 +128,7 @@ def get_frequncy_array(dict):
         frequency_array.append(array.copy())
     return np.array(frequency_array)
 fre_array = get_frequncy_array(container_gram)
-#print(len(fre_array[0]))
+#print(fre_array)
 kmeans = KMeans(n_clusters=6, random_state=0).fit(fre_array)
 #print(kmeans.labels_)
 #for i in kmeans.cluster_centers_[0]:
@@ -121,7 +143,7 @@ def filter_zero_centers_index(cluster_centers):
         result.append(cluster_index.copy())
     return result
 non_zero_index_center = filter_zero_centers_index(kmeans.cluster_centers_)
-#print(non_zero_index_center[0])
+#print(non_zero_index_center[1])
 def find_words_index(index_array):
     result = []
     for i in index_array:
@@ -133,7 +155,7 @@ def find_words_index(index_array):
         result.append(words.copy())
     return result
 feature_words = find_words_index(non_zero_index_center)
-#print(feature_words[0])
+#print(feature_words[1])
 # test = True
 # for i in range(len(feature_words)):
 #     if len(feature_words[i]) != len(non_zero_index_center[i]):
