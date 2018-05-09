@@ -10,6 +10,8 @@ def home():
 def top_ten_rests():
     zip_code = request.form.get("zip_code")
     all_restaurant_urls = find_all_rests(str(zip_code))
+    all_reviews = pool_review_scraper(all_restaurant_urls)
+    
     return render_template("top_ten_rests.html", top10=all_restaurant_urls)
 
 @app.route('/restaurant/<restaurant_info>')

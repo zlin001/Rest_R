@@ -3,6 +3,7 @@ from joblib import Parallel, delayed
 from bs4 import BeautifulSoup
 import requests
 import re
+import time
 
 def crawl_pages(base_url):
     count = 0
@@ -12,17 +13,20 @@ def crawl_pages(base_url):
     while next_button:
         current_url = base_url + str(count)
         html = requests.get(current_url)
-        soup = BeautifulSoup(html.text, "html.parser")
+        soup = BeautifulSoup(html.text, "lxml")
 
         review_container = soup.findAll('div', attrs={ 'class': 'review-content'})
 
         for review in review_container:
-            reviews_in_page.append(review.find('p').text)
+            reviews_in_page.append((review.find('p').text).encode("utf-8"))
 
         next_button = soup.findAll('a', attrs={'class': 'next'})
         count = count + 20
 
+    print(base_url)
+    print("\n")
 
+    # print(reviews_in_page)
     return reviews_in_page
 
 def get_30_rests_urls():
@@ -36,29 +40,22 @@ def get_30_rests_urls():
 
     return rest_urls
 
+if __name__ == '__main__':
+    start_time = time.time()
 
-url = "https://www.yelp.com/biz/aria-kabab-flushing-3?start="
+    all_rests_urls = get_30_rests_urls()
+    fixed_urls = []
 
-all_rests_urls = get_30_rests_urls()
-
-file_count = 0
-for url in all_rests_urls:
-    print(file_count)
-    # # file_name = "file_name" + str(file_count) + ".txt"
-    # file_count += 1
-
-    url = re.sub("\?(.*)", '', url)
-    url = url + "?start="
-    reviews = crawl_pages(url)
-
-    f = open("all_reviews.txt",'ab+')
-    for i in range(len(reviews)):
-        f.write((reviews[i] + '\n').encode("utf-8"))
-    f.close()
+    for url in all_rests_urls:
+        url = re.sub("\?(.*)", '', url)
+        url = url + "?start="
+        fixed_urls.append(url)
 
 
-# reviews = crawl_pages(url)
-# f = open('reviews_clean.txt','r+')
-# for i in range(len(reviews)):
-#     f.write(reviews[i] + '\n')
-# f.close()
+    reviews = Parallel(n_jobs=-1)(map(delayed(crawl_pages), fixed_urls))
+
+    elapsed_time = start_time - time.time()
+
+    print(elapsed_time)
+
+    # print(reviews)
