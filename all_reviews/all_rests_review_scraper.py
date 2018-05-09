@@ -1,4 +1,5 @@
 from urllib.request import urlopen
+from joblib import Parallel, delayed
 from bs4 import BeautifulSoup
 import requests
 import re
