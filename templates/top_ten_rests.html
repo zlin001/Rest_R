@@ -1,74 +1,69 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link href="style.css" type="text/css" rel="stylesheet">
+    <link href="static/css/style2.css" type="text/css" rel="stylesheet">
 
     <title>The Top Ten Restaurants in {{zip_code}}</title>
   </head>
+    
   <body>
   	<h1>Yelp Rating System</h1>
   	<h2>Top 10 restaurants in zip code: {{zip_code}}</h2>
-  	<table>
+  	<table id="table_rest" class="table">
   		<thead>
   			<tr>
-  				<th scope="col">Rank</th>
-  				<th scope="col">Restaurant Name</th>
-  				<th scope="col">Address</th>
-  				<th scope="col">Phone</th>
-  				<th scope="col">Taste</th>
-  				<th scope="col">Environment</th>
-  				<th scope="col">Service</th>
+  				<th>Rank</th>
+  				<th>Restaurant Name</th>
+  				<th>Address</th>
+  				<th>Phone</th>
   			</tr>
   		</thead>
 
   		<tbody>
-  			<tr>
-  				<td>1</td>
-  				<td><a href="{{ url_for('restaurant', restaurant_info=11355 ) }}"> Restaurant 1</a></td>
-  			</tr>
-   			<tr>
-  				<td>2</td>
-  				<td><a href= ".Restaurant_2.html"> Restaurant 2</a></td>
-  			</tr>
-   			<tr>
-  				<td>3</td>
-  				<td><a href= ".Restaurant_3.html"> Restaurant 3</a></td>
-  			</tr>
-   			<tr>
-  				<td>4</td>
-  				<td><a href= ".Restaurant_4.html"> Restaurant 4</a></td>
-  			</tr>
-   			<tr>
-  				<td>5</td>
-  				<td><a href= ".Restaurant_5.html"> Restaurant 5</a></td>
-  			</tr>
-   			<tr>
-  				<td>6</td>
-  				<td><a href= ".Restaurant_6.html"> Restaurant 6</a></td>
-  			</tr>
-   			<tr>
-  				<td>7</td>
-  				<td><a href= ".Restaurant_7.html"> Restaurant 7</a></td>
-  			</tr>
-   			<tr>
-  				<td>8</td>
-  				<td><a href= ".Restaurant_8.html"> Restaurant 8</a></td>
-  			</tr>
-   			<tr>
-  				<td>9</td>
-  				<td><a href= ".Restaurant_9.html"> Restaurant 9</a></td>
-  			</tr>
-  			<tr>
-  				<td>10</td>
-  				<td><a href= ".Restaurant_10.html"> Restaurant 10</a></td>
-  			</tr>
-
+ 			<tr>
+ 				<td></td> 
+ 				<td></td>
+ 				<td></td>
+ 				<td></td>
+ 			</tr>
+ 				
+ 			<tr>
+ 				<td></td>
+ 				<td></td>
+ 				<td></td>
+ 				<td></td>
+ 			</tr>
+ 			
+  		<!--	<tr>			
+  				<td><a href="{{ url_for('restaurant', restaurant_info=11355 )}}"> 					Restaurant x</a></td>
+  			</tr> 
+  		-->
+		 
   		</tbody>
   	</table>
-
+  	
+	<script>
+  	var array = 
+  	[
+  		["1","Kiku", "555 5th ave, New York, NY 11355", "212-111-2222"],
+  		["2","Yamoto", "444 6th ave, New York, NY 11355", "212-888-9999"]
+  	];
+  		var table = document.getElementById("table_rest");
+  		
+  	for(var i = 1; i <table.rows.length; i++)
+  	{
+  		for(var j = 0; j< table.rows[i].cells.length; j++)
+  		{
+  				if(j==1)
+  					table.rows[i].cells[j].innerHTML = '<a href= "restaurant.html">' + array[i-1][j] + "</a>";
+  				else 
+  			table.rows[i].cells[j].innerHTML = array[i - 1][j];
+  		}
+  	}
+  	
+  	</script>
 
   </body>
-
 
 
 </html>
