@@ -45,8 +45,8 @@
 	<script>
   	var array = 
   	[
-  		["1","Kiku", "555 5th ave, New York, NY 11355", "212-111-2222"],
-  		["2","Yamoto", "444 6th ave, New York, NY 11355", "212-888-9999"]
+  		["Kiku", "555 5th ave, New York, NY 11355", "212-111-2222"],
+  		["Yamoto", "444 6th ave, New York, NY 11355", "212-888-9999"]
   	];
   		var table = document.getElementById("table_rest");
   		
@@ -54,7 +54,9 @@
   	{
   		for(var j = 0; j< table.rows[i].cells.length; j++)
   		{
-  				if(j==1)
+  				if(j==0)
+  				table.rows[i].cells[j].innerHTML = i;
+  				else if(j==1)
   					table.rows[i].cells[j].innerHTML = '<a href= "restaurant.html">' + array[i-1][j] + "</a>";
   				else 
   			table.rows[i].cells[j].innerHTML = array[i - 1][j];
