@@ -7,6 +7,22 @@ import re
 import time
 import win_unicode_console
 
+def get_all_reviews(all_rest_urls):
+    win_unicode_console.enable()
+    start_time = time.time()
+
+    with Pool(35) as p:
+        all_reviews = p.map(crawl_pages, all_rest_urls)
+        p.terminate()
+        p.join()
+
+    elapsed_time = time.time() - start_time
+
+    print(elapsed_time/60)
+
+    return(all_reviews)
+
+
 def crawl_pages(base_url):
     count = 0
     reviews_in_page = []
@@ -35,38 +51,8 @@ def crawl_pages(base_url):
     review_name_text.append(base_url)
     review_name_text.append(reviews_in_page)
 
+    print(review_name_text)
     return review_name_text
 
-def get_30_rests_urls():
-    headers = {"Authorization":"Bearer 5uVEBGiZ40XPkmlPEw-fb478unHY3MG2j2KvwVNcQF61OUjLs1lwjWTDIZfHgRwzcf3aWC7McbdWqs4qz-Z3XB0HGR7rOsxD-sbQsbbOeMfl8c8xNoGW3Sbv4NvUWnYx"}
-    response = requests.get("https://api.yelp.com/v3/businesses/search?location=11355&term=restaurants&limit=30", headers=headers).json()
-    restaurants = response["businesses"]
-    rest_urls = []
-
-    for rest in restaurants:
-        rest_urls.append(rest["url"])
-
-    return rest_urls
-
 if __name__ == '__main__':
-    win_unicode_console.enable()
-    start_time = time.time()
-
-    all_rests_urls = get_30_rests_urls()
-    fixed_urls = []
-
-    for url in all_rests_urls:
-        url = re.sub("\?(.*)", '', url)
-        url = url + "?start="
-        fixed_urls.append(url)
-
-    with Pool(35) as p:
-        all_reviews = p.map(crawl_pages, fixed_urls)
-        p.terminate()
-        p.join()
-
-    print(all_reviews)
-
-    elapsed_time = time.time() - start_time
-
-    print(elapsed_time/60)
+    get_all_reviews(all_rest_urls)
