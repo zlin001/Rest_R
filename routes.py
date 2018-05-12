@@ -11,10 +11,10 @@ def home():
 def top_ten_rests():
     zip_code = request.form.get("zip_code")
     all_restaurant_urls = find_all_rests(str(zip_code))
-    print(all_restaurant_urls)
-    # all_reviews = get_all_reviews(all_restaurant_urls)
+    # print(all_restaurant_urls)
+    all_reviews = get_all_reviews(all_restaurant_urls)
 
-    # print(all_reviews)
+
     top_10 = [{"rank": 1, "name": "Aria", "phone": 6461235344,"total_score": 3.3, "categories": {"taste": 3, "decor": 5, "style": 1.3}, "address": "135-34 booth memorial ave flushing ny 11355"}, {"rank": 1, "name": "Aria", "phone": 6461235344, "categories": {"taste": 3, "decor": 5, "style": 1.3}, "address": "135-34 booth memorial ave flushing ny 11355"}, {"rank": 1, "name": "Aria", "phone": 6461235344, "categories": {"taste": 3, "decor": 5, "style": 1.3}, "address": "135-34 booth memorial ave flushing ny 11355"}]
     return render_template("top_ten_rests.html", top_restaraunts=top_10, zip_code=zip_code)
 
