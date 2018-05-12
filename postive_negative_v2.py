@@ -101,10 +101,19 @@ reviews = f_reviews.read().splitlines()
 f_reviews.close()
 
 text = [reviews,["I am bad","I am good"],["food is good"]]
-with Pool(5) as p:
-    print(p.map(all_scores, text))
-    p.terminate()
-    p.join()
+#restuarants = [
+#       restuarant = ["name",[review1,review2]]
+#          restuarant[1] = [review1,review2]
+#       ]
+def get_all_scores(restuarants):
+    data = []
+    for restuarant in restuarants:
+        data.append(restuarant[1])
+    with Pool(31) as p:
+        print(p.map(all_scores, data))
+        p.terminate()
+        p.join()
+
 #print(all_score)
 # with open("reviews_score.txt",'w',encoding='windows-1252') as f_reviews_score, open("final_score.txt",'w',encoding="windows-1252") as f_final_score:
 #     for i in range(31):
