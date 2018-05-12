@@ -11,12 +11,20 @@ def top_ten_rests():
     zip_code = request.form.get("zip_code")
     all_restaurant_urls = find_all_rests(str(zip_code))
     #all_reviews = pool_review_scraper(all_restaurant_urls)
-    
-    return render_template("top_ten_rests.html", top10=all_restaurant_urls)
+
+    return render_template("top_ten_rests.html", top10=all_restaurant_urls, zip_code=zip_code)
+
+@app.route('/top_ten_rests_new', methods=["GET",'POST'])
+def top_ten_rests_new():
+    zip_code = request.form.get("zip_code")
+    all_restaurant_urls = find_all_rests(str(zip_code))
+    #all_reviews = pool_review_scraper(all_restaurant_urls)
+    top_10 = [{"rank": 1, "name": "Aria", "phone": 6461235344, "categories": {"taste": 3, "decor": 5, "style": 1.3}, "address": "135-34 booth memorial ave flushing ny 11355"}, {"rank": 1, "name": "Aria", "phone": 6461235344, "categories": {"taste": 3, "decor": 5, "style": 1.3}, "address": "135-34 booth memorial ave flushing ny 11355"}, {"rank": 1, "name": "Aria", "phone": 6461235344, "categories": {"taste": 3, "decor": 5, "style": 1.3}, "address": "135-34 booth memorial ave flushing ny 11355"}]
+    return render_template("top_ten_rests_new.html", top_restaraunts=top_10, zip_code=zip_code)
 
 @app.route('/restaurant/<restaurant_info>')
 def restaurant(restaurant_info):
-    restaurant_info= {"rank": 1, "name": "Aria", "phone": 6461235344, "categories": {"taste": 3, "decor": 5, "style": 1.3}, "location": "135-34 booth memorial ave flushing ny 11355"}
+    restaurant_info= {"rank": 1, "name": "Aria", "phone": 6461235344, "categories": {"taste": 3, "decor": 5, "style": 1.3}, "address": "135-34 booth memorial ave flushing ny 11355"}
     return render_template("restaurant.html", restaurant_info=restaurant_info)
 
 
