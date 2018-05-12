@@ -143,7 +143,7 @@ def get_frequncy_array(dict):
     return np.array(frequency_array)
 fre_array = get_frequncy_array(container_gram)
 print(fre_array)
-#kmeans = KMeans(n_clusters=2, random_state=0)
+kmeans = KMeans(n_clusters=2, random_state=0)
 #print(kmeans.labels_)
 #print(kmeans.cluster_centers_)
 # def find_SSE(clusters):
