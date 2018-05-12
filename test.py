@@ -97,3 +97,50 @@ mofi_to_index(words_dic)
 #print(words_dic_bi)
 # print the words for unqigram
 #print(words_dic)
+
+"""Above the stuff are for all review, below are for each single review"""
+def normalization(dic):
+    for key in dic:
+        if dic[key] > 0:
+            dic[key] = dic[key] / len(dic)
+container_gram = []
+# get a copy from word_dic
+word_dic_temp = words_dic.copy()
+# count = 0
+# print(len(word_dic_temp))
+def find_frequency_dict(data,container):
+    for i in range(len(data)):
+        if data[i] in container:
+            container[data[i]] += 1
+
+def review_to_train_data(reviews, container_gram):
+    for review in reviews:
+        # string to list
+        review_word_tokens = word_tokenize(review)
+        # filter out the review
+        filtered_review_each = [w for w in review_word_tokens if not w in stop_words]
+        # set to zero for all keys
+        mofi_to_zero(word_dic_temp)
+        # call the function to generate the gram vector
+        find_frequency_dict(filtered_review_each,word_dic_temp)
+        # normalization
+        normalization(word_dic_temp)
+        #print(len(word_dic_temp))
+        # if count == 0:
+        #     test = word_dic_temp.copy()
+        # count += 1
+        # and save in an array
+        container_gram.append(word_dic_temp.copy())
+review_to_train_data(reviews,container_gram)
+# print(len(container_gram))
+def get_frequncy_array(dict):
+    frequency_array = []
+    for i in dict:
+        array = []
+        for key in i:
+            array.append(i[key])
+        frequency_array.append(array.copy())
+    return np.array(frequency_array)
+fre_array = get_frequncy_array(container_gram)
+print(fre_array)
+kmeans = KMeans(n_clusters=2, random_state=0)
