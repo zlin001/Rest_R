@@ -70,3 +70,5 @@ if __name__ == '__main__':
     elapsed_time = time.time() - start_time
 
     print(elapsed_time/60)
+
+    # return(all_reviews)
