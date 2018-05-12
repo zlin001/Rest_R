@@ -5,7 +5,7 @@
 
     <title>The Top Ten Restaurants in {{zip_code}}</title>
   </head>
-    
+
   <body>
   	<h1>Yelp Rating System</h1>
   	<h2>Top 10 restaurants in zip code: {{zip_code}}</h2>
@@ -21,29 +21,29 @@
 
   		<tbody>
  			<tr>
- 				<td></td> 
+ 				<td></td>
  				<td></td>
  				<td></td>
  				<td></td>
  			</tr>
- 				
+
  			<tr>
  				<td></td>
  				<td></td>
  				<td></td>
  				<td></td>
  			</tr>
- 			
-  		<!--	<tr>			
+
+  		<!--	<tr>
   				<td><a href="{{ url_for('restaurant', restaurant_info=11355 )}}"> 					Restaurant x</a></td>
-  			</tr> 
+  			</tr>
   		-->
-		 
+
   		</tbody>
   	</table>
-  	
+
 	<script>
-  	var array = 
+  	var array =
   	[
   		["Kiku", "555 5th ave, New York, NY 11355", "212-111-2222"],
   		["Yamoto", "444 6th ave, New York, NY 11355", "212-888-9999"]
@@ -58,11 +58,11 @@
   				table.rows[i].cells[j].innerHTML = i;
   				else if(j==1)
   					table.rows[i].cells[j].innerHTML = '<a href= "restaurant.html">' + array[i-1][j] + "</a>";
-  				else 
+  				else
   			table.rows[i].cells[j].innerHTML = array[i - 1][j];
   		}
   	}
-  	
+
   	</script>
 
   </body>
