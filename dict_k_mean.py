@@ -12,13 +12,14 @@ def load_reviews():
     f_reviews = open('all_reviews/all_reviews.txt','r',encoding='utf-8')
     # all review in one string
     all_review = f_reviews.read()
+    all_review = all_review.lower()
     f_reviews.close()
     all_review = all_review.replace("."," ")
     all_review = all_review.replace(","," ")
+    all_review = all_review.replace("/"," ")
     # f_noun = open('Directionary/nouns/91K nouns.txt','r',encoding="windows-1252")
     # all_nouns = f_noun.read()
     # f_noun.close()
-    #
     # all_review = all_nouns + all_review
     # getting all reviews
     f_reviews = open('all_reviews/all_reviews.txt','r',encoding='utf-8')
@@ -83,6 +84,8 @@ def create_frequency_dict(data):
 #gram_generator(filtered_review, 2, words_dic_bi)
 filtered_review,all_review,reviews = load_reviews()
 words_dic = create_frequency_dict(filtered_review)
+f = open("features_words/feature_words.txt",'w')
+
 #print(len(words_dic))
 """A small check to see if we can replace word_tokens to unigram"""
 # test_container = {}
@@ -124,6 +127,7 @@ def review_to_train_data(reviews, container_gram):
         # string to list
         review = review.replace("."," ")
         review = review.replace(","," ")
+        review = all_review.replace("/"," ")
         review_word_tokens = word_tokenize(review)
         # filter out the review
         stop_words = set(stopwords.words('english'))

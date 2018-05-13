@@ -7,20 +7,19 @@ def find_all_rests(zip_code):
     search_url = "https://api.yelp.com/v3/businesses/search?location=" + str(zip_code) + "&term=restaurants&limit=30"
     response = requests.get(search_url, headers=headers).json()
 
-
-
     restaurants = response["businesses"]
     rest_urls = []
 
     for rest in restaurants:
-        rest_urls.append(rest["url"])
+        temp_rest = []
 
-    for url in rest_urls:
-        url = re.sub("\?(.*)", '', url)
+        url = re.sub("\?(.*)", '', rest["url"])
         url = url + "?start="
 
-        print(url)
+        temp_rest.append(rest["name"].encode('utf-8'))
+        temp_rest.append(url)
+
+        rest_urls.append(temp_rest)
+
 
     return rest_urls
-
-find_all_rests("11355")
