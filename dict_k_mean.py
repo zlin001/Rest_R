@@ -83,7 +83,7 @@ def create_frequency_dict(data):
 #gram_generator(filtered_review, 2, words_dic_bi)
 filtered_review,all_review,reviews = load_reviews()
 words_dic = create_frequency_dict(filtered_review)
-print(len(words_dic))
+#print(len(words_dic))
 """A small check to see if we can replace word_tokens to unigram"""
 # test_container = {}
 # test(filtered_review,test_container)
@@ -227,7 +227,6 @@ def filter_feature_word(feature_words):
     return result
 
 filter_features = filter_feature_word(feature_words)
-print(len(filter_features[0]),len(filter_features[1]),len(filter_features[2]),len(filter_features[3]),len(filter_features[4]))
 f_nk = open("features_words/six_k.txt",'w')
 for feature in filter_features:
     for i in feature:
