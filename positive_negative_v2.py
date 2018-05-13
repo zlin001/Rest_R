@@ -89,6 +89,30 @@ def score_reviews(array_word_tokens):
 
 def all_scores(restuarant):
     result_all = {}
+    array_word_tokens = []
+    for review in restuarant[1]:
+        word_tokens = word_tokenize(review)
+        array_word_tokens.append(word_tokens.copy())
+    score_container, all_score = score_reviews(array_word_tokens)
+    #print(all_score,restuarant)
+    result_all["name"] = restuarant[0]
+    result_all["total_score"] = all_score
+    return result_all
+
+# f_reviews = open("all_reviews/file_name30.txt","r",encoding="windows-1252")
+# reviews = f_reviews.read().splitlines()
+# f_reviews.close()
+# text = [["abc",reviews],["god",["i am good student"]]]
+def get_all_scores(restuarants):
+    with Pool(31) as p:
+        result_all = p.map(all_scores, restuarants)
+        p.terminate()
+        p.join()
+    return result_all
+# result_all = get_all_scores(text)
+# print(result_all)
+
+def each_scores(restuarant):
     result_each = {}
     array_word_tokens = []
     for review in restuarant[1]:
@@ -96,25 +120,20 @@ def all_scores(restuarant):
         array_word_tokens.append(word_tokens.copy())
     score_container, all_score = score_reviews(array_word_tokens)
     #print(all_score,restuarant)
-    result_all[restuarant[0]] = all_score
-    result_each[restuarant[0]] = score_container
-    return result_all, result_each
+    result_all["name"] = restuarant[0]
+    result_all["review_score"] = all_score
+    return result_each
 
-# f_reviews = open("all_reviews/file_name30.txt","r",encoding="windows-1252")
-# reviews = f_reviews.read().splitlines()
-# f_reviews.close()
-#
-# text = [["name",reviews],["name",["i am good student"]]]
-
-def get_all_scores(restuarants):
+def get_each_scores(restuarants):
     with Pool(31) as p:
-        result_all, result_each = p.map(all_scores, restuarants)
+        result_each = p.map(each_scores, restuarants)
         p.terminate()
         p.join()
-    return result_all,result_each
-# result_all, result_each = get_all_scores(text)
-# print(result_all)
+    return result_each
+
+# result_each = get_each_scores(text)
 # print(result_each)
+#print(result_each)
 #print(all_score)
 # with open("reviews_score.txt",'w',encoding='windows-1252') as f_reviews_score, open("final_score.txt",'w',encoding="windows-1252") as f_final_score:
 #     for i in range(31):
