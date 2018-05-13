@@ -99,18 +99,18 @@ def all_scores(restuarant):
     result_all["total_score"] = all_score
     return result_all
 
-f_reviews = open("all_reviews/file_name30.txt","r",encoding="windows-1252")
-reviews = f_reviews.read().splitlines()
-f_reviews.close()
-text = [["abc",reviews],["god",["i am good student"]]]
+# f_reviews = open("all_reviews/file_name30.txt","r",encoding="windows-1252")
+# reviews = f_reviews.read().splitlines()
+# f_reviews.close()
+# text = [["abc",reviews],["god",["i am good student"]]]
 def get_all_scores(restuarants):
     with Pool(31) as p:
         result_all = p.map(all_scores, restuarants)
         p.terminate()
         p.join()
     return result_all
-result_all = get_all_scores(text)
-print(result_all)
+# result_all = get_all_scores(text)
+# print(result_all)
 
 def each_scores(restuarant):
     result_each = {}
@@ -131,8 +131,8 @@ def get_each_scores(restuarants):
         p.join()
     return result_each
 
-result_each = get_each_scores(text)
-print(result_each)
+# result_each = get_each_scores(text)
+# print(result_each)
 #print(result_each)
 #print(all_score)
 # with open("reviews_score.txt",'w',encoding='windows-1252') as f_reviews_score, open("final_score.txt",'w',encoding="windows-1252") as f_final_score:
