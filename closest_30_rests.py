@@ -9,16 +9,17 @@ def find_all_rests(zip_code):
 
     restaurants = response["businesses"]
     rest_urls = []
-    fixed_urls = []
 
     for rest in restaurants:
-        rest_urls.append(rest["url"])
+        temp_rest = []
 
-    for url in rest_urls:
-        url = re.sub("\?(.*)", '', url)
+        url = re.sub("\?(.*)", '', rest["url"])
         url = url + "?start="
-        fixed_urls.append(url)
+
+        temp_rest.append(rest["name"].encode('utf-8'))
+        temp_rest.append(url)
+
+        rest_urls.append(temp_rest)
 
 
-
-    return fixed_urls
+    return rest_urls

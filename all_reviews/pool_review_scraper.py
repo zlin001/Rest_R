@@ -23,8 +23,9 @@ def get_all_reviews(all_rest_urls):
     return(all_reviews)
 
 
-def crawl_pages(base_url):
+def crawl_pages(all_restaraunts_init_data):
     count = 0
+    base_url = all_restaraunts_init_data[1]
     reviews_in_page = []
     review_name_text = []
 
@@ -50,7 +51,9 @@ def crawl_pages(base_url):
 
     review_name_text.append(base_url)
     review_name_text.append(reviews_in_page)
+    review_name_text.append(all_restaraunts_init_data[1])
 
+    print(review_name_text)
     return review_name_text
 
 if __name__ == '__main__':
