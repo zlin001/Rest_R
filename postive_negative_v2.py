@@ -1,6 +1,7 @@
 from nltk import ngrams
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
+from multiprocessing import Pool
 """Citation:Minqing Hu and Bing Liu. "Mining and Summarizing Customer Reviews."
 ;       Proceedings of the ACM SIGKDD International Conference on Knowledge
 ;       Discovery and Data Mining (KDD-2004), Aug 22-25, 2004, Seattle,
@@ -66,19 +67,11 @@ def scoring_one(p_score,n_score,p_invi,n_invi):
     except ZeroDivisionError:
         score = 0
     return score
-# this is function collect score of all reivews and return a score for this restuarant
-def scoring_all(score_array):
-    # the result
-    sum = 0
-    # loop the score arrey and add them
-    for i in range(len(score_array)):
-        sum += score_array[i]
-        #return the result by taking average
-    return sum/len(score_array)
 #this is main function. Input the array word tokens and return score of each array and a final score
 def score_reviews(array_word_tokens):
     # a container to contain the score
     score_container = []
+    sum = 0
     #we loop them
     for i in range(len(array_word_tokens)):
         # call the positve popularity function
@@ -86,27 +79,39 @@ def score_reviews(array_word_tokens):
         # call the negative popularity function
         n_score, n_invi = scan_popularity(array_word_tokens[i],"negative_words.txt","inc_words.txt","dec_words.txt")
         # add result to container.
+        sum += scoring_one(p_score,n_score,p_invi,n_invi)
         score_container.append(scoring_one(p_score,n_score,p_invi,n_invi))
     # return the final score and the container that contained score of each review
-    return score_container, scoring_all(score_container)
+    return score_container, sum/len(array_word_tokens)
 
 # review_score_containter_all = []
 # final_score_container_all = []
 
 def all_scores(restuarant):
+    result = {}
     array_word_tokens = []
-    for review in restuarant:
+    for review in restuarant[1]:
         word_tokens = word_tokenize(review)
         array_word_tokens.append(word_tokens.copy())
     score_container, all_score = score_reviews(array_word_tokens)
-    return score_container, all_score
+    #print(all_score,restuarant)
+    result[restuarant[0]] = all_score
+    return result
 
 f_reviews = open("all_reviews/file_name30.txt","r",encoding="windows-1252")
 reviews = f_reviews.read().splitlines()
 f_reviews.close()
 
-score_container,all_score = all_scores(reviews)
-print(all_score)
+text = [["name",reviews],["name",["i am good student"]]]
+
+def get_all_scores(restuarants):
+    with Pool(31) as p:
+        result = p.map(all_scores, restuarants)
+        p.terminate()
+        p.join()
+    return result
+print(get_all_scores(text))
+#print(all_score)
 # with open("reviews_score.txt",'w',encoding='windows-1252') as f_reviews_score, open("final_score.txt",'w',encoding="windows-1252") as f_final_score:
 #     for i in range(31):
 #         score_container, all_score = all_scores(i)
