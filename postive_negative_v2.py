@@ -88,15 +88,17 @@ def score_reviews(array_word_tokens):
 # final_score_container_all = []
 
 def all_scores(restuarant):
-    result = {}
+    result_all = {}
+    result_each = {}
     array_word_tokens = []
     for review in restuarant[1]:
         word_tokens = word_tokenize(review)
         array_word_tokens.append(word_tokens.copy())
     score_container, all_score = score_reviews(array_word_tokens)
     #print(all_score,restuarant)
-    result[restuarant[0]] = all_score
-    return result
+    result_all[restuarant[0]] = all_score
+    result_each[restuarant[0]] = score_container
+    return result_all, result_each
 
 f_reviews = open("all_reviews/file_name30.txt","r",encoding="windows-1252")
 reviews = f_reviews.read().splitlines()
@@ -106,11 +108,13 @@ text = [["name",reviews],["name",["i am good student"]]]
 
 def get_all_scores(restuarants):
     with Pool(31) as p:
-        result = p.map(all_scores, restuarants)
+        result_all, result_each = p.map(all_scores, restuarants)
         p.terminate()
         p.join()
-    return result
-print(get_all_scores(text))
+    return result_all,result_each
+result_all, result_each = get_all_scores(text)
+print(result_all)
+print(result_each)
 #print(all_score)
 # with open("reviews_score.txt",'w',encoding='windows-1252') as f_reviews_score, open("final_score.txt",'w',encoding="windows-1252") as f_final_score:
 #     for i in range(31):
