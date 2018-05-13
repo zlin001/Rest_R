@@ -42,7 +42,7 @@ def crawl_pages(all_restaraunts_init_data):
         review_container = soup.findAll('div', attrs={ 'class': 'review-content'})
 
         for review in review_container:
-            reviews_in_page.append((review.find('p').text).encode("utf-8"))
+            reviews_in_page.append((review.find('p').text))
 
         next_button = soup.findAll('a', attrs={'class': 'next'})
         count = count + 20
@@ -53,7 +53,7 @@ def crawl_pages(all_restaraunts_init_data):
     review_name_text.append(reviews_in_page)
     review_name_text.append(all_restaraunts_init_data[1])
 
-    print(review_name_text)
+
     return review_name_text
 
 if __name__ == '__main__':
