@@ -120,7 +120,8 @@ def each_scores(restuarant):
         array_word_tokens.append(word_tokens.copy())
     score_container, all_score = score_reviews(array_word_tokens)
     #print(all_score,restuarant)
-    result_each[restuarant[0]] = score_container
+    result_all["name"] = restuarant[0]
+    result_all["review_score"] = all_score
     return result_each
 
 def get_each_scores(restuarants):
