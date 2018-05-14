@@ -7,6 +7,7 @@ import numpy as np
 from multiprocessing import Pool
 import time
 # getting all reviews
+start_time = time.time()
 def load_reviews():
     f_reviews = open('all_reviews/all_reviews_fix.txt','r',encoding='utf-8')
     # all review in one string
@@ -181,7 +182,17 @@ def main():
     # print(avg_sse)
     return kmeans,word_dic_temp
 
-kmeans, word_dic_temp = main()
+def prediction(reviews,kmeans,word_dic_temp):
+    start_time = time.time()
+    container_gram = []
+    review_to_train_data(reviews,container_gram,word_dic_temp)
+    fre_array = get_frequncy_array(container_gram)
+    result = kmeans.predict(fre_array)
+    return result
+#kmeans, word_dic_temp = main()
+#print(time.time() - start_time)
+
+#print(kmeans.cluster_centers_[0])
 # def filter_zero_centers_index(cluster_centers):
 #     result = []
 #     for i in cluster_centers:
@@ -240,16 +251,8 @@ kmeans, word_dic_temp = main()
 #     f_nk.write("----------------------------------------------------------------------------------------\n")
 # f_nk.close()
 
-
-def prediction(reviews,kmeans,word_dic_temp):
-    start_time = time.time()
-    container_gram = []
-    review_to_train_data(reviews,container_gram,word_dic_temp)
-    fre_array = get_frequncy_array(container_gram)
-    result = kmeans.predict(fre_array)
-    return result
-print(time.time() - start_time)
-print(prediction(txt,kmeans,word_dic_temp))
+# print(time.time() - start_time)
+# print(prediction(txt,kmeans,word_dic_temp))
 
 #print(filter_features[0])
 # print(len(feature_words[0]),len(feature_words[1]),len(feature_words[2]),len(feature_words[3]),len(feature_words[4]),len(feature_words[5]))
