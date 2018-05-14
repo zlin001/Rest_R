@@ -21,8 +21,12 @@ def top_ten_rests():
 
     sorted_scores = sorted(all_scores_with_info, key=itemgetter('total_score'), reverse=True)
     print(all_scores_with_info)
+    top_10 = []
+    count = 0
+    for rest in all_scores_with_info:
+        if count < 10:
+            top_10.append(rest)
 
-    top_10 = [{"rank": 1, "name": "Aria", "phone": 6461235344,"total_score": 3.3, "categories": {"taste": 3, "decor": 5, "style": 1.3}, "address": "135-34 booth memorial ave flushing ny 11355"}, {"rank": 1, "name": "Aria", "phone": 6461235344, "categories": {"taste": 3, "decor": 5, "style": 1.3}, "address": "135-34 booth memorial ave flushing ny 11355"}, {"rank": 1, "name": "Aria", "phone": 6461235344, "categories": {"taste": 3, "decor": 5, "style": 1.3}, "address": "135-34 booth memorial ave flushing ny 11355"}]
     return render_template("top_ten_rests.html", top_restaraunts=sorted_scores, zip_code=zip_code)
 
 @app.route('/restaurant/<restaurant_info>')
