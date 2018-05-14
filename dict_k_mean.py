@@ -167,6 +167,83 @@ def find_SSE(clusters,labels_,fre_array):
         sum_sse += sse[x]
     return sse, sum_sse/len(sse)
 
+
+def prediction(restuarant):
+    result = {}
+    container_gram = []
+    review_to_train_data(restuarant[1],container_gram,restuarant[4].copy())
+    fre_array = get_frequncy_array(container_gram)
+    prediction_array = restuarant[3].predict(fre_array)
+    center_container = []
+    for i in prediction_array:
+        center_container.append(restuarant[3].cluster_centers_[i])
+    result["name"] = restuarant[0]
+    result["kmean_centers"] = center_container
+    result["prediction_array"] = prediction_array
+    result["fre_array"] = fre_array
+    result["word_dic_temp"] = restuarant[4]
+    result["score_array"] = restuarant[5]
+    result["cluster_centers"] = restuarant[3].cluster_centers_
+    return result
+
+def all_prediction(restuarants):
+    with Pool(31) as p:
+        result_all = p.map(prediction, restuarants)
+        p.terminate()
+        p.join()
+    return result_all
+
+#print(kmeans.cluster_centers_[0])
+def filter_zero_centers_index(cluster_centers):
+    result = []
+    for i in cluster_centers:
+        cluster_index = {}
+        for j in range(len(i)):
+            if i[j] > 0:
+                cluster_index[j] = i[j]
+        result.append(cluster_index.copy())
+    return result
+#print(non_zero_index_center[1])
+#print(len(non_zero_index_center[0]),len(non_zero_index_center[1]),len(non_zero_index_center[2]),len(non_zero_index_center[3]),len(non_zero_index_center[4]))
+
+def find_words_index(index_array,words_dic):
+    result = []
+    for i in index_array:
+        words = {}
+        for key_i in i:
+            for key in words_dic:
+                if words_dic[key] == key_i:
+                    words[key] = i[key_i]
+        result.append(words.copy())
+    return result
+
+#print(len(feature_words[0]),len(feature_words[1]),len(feature_words[2]),len(feature_words[3]),len(feature_words[4]))
+#print(feature_words[0])
+# print(len(feature_words))
+
+def filter_feature_word(feature_words):
+    f_pronoun_conj = open("Directionary/pronouns_and_conj.txt","r")
+    pronoun_conj = f_pronoun_conj.read().splitlines()
+    f_pronoun_conj.close()
+    f_verb = open("Directionary/verbs/31K verbs.txt","r")
+    verbs = f_verb.read().splitlines()
+    f_verb.close()
+    f_adverb = open("Directionary/adverbs/6K adverbs.txt","r")
+    adverbs = f_adverb.read().splitlines()
+    f_adverb.close()
+    f_adj = open("Directionary/adjectives/28K adjectives.txt","r")
+    adjs = f_adj.read().splitlines()
+    f_adj.close()
+    result = []
+    for feature_list in feature_words:
+        new_feature_list = {}
+        for key in feature_list:
+            if key.lower() not in pronoun_conj and key.lower() not in verbs and key.lower() not in adverbs and key.lower() not in adjs:
+                new_feature_list[key] = feature_list[key]
+        result.append(new_feature_list.copy())
+    return result
+
+
 def main():
     filtered_review,reviews = load_reviews()
     words_dic = create_frequency_dict(filtered_review)
@@ -177,80 +254,21 @@ def main():
     fre_array = get_frequncy_array(container_gram)
     kmeans = KMeans(n_clusters=6, random_state=0)
     kmeans.fit(fre_array)
+    mofi_to_index(word_dic_temp)
+    # non_zero_index_center = filter_zero_centers_index(kmeans.cluster_centers_)
+    # feature_words = find_words_index(non_zero_index_center,words_dic)
+    # filter_features = filter_feature_word(feature_words)
+    # f_nk = open("features_words/six_k.txt",'w')
+    # for feature in filter_features:
+    #     for i in feature:
+    #         f_nk.write(str(i) + "\n")
+    #     f_nk.write("----------------------------------------------------------------------------------------\n")
+    # f_nk.close()
     # sse,avg_sse = find_SSE(kmeans.cluster_centers_,kmeans.labels_,fre_array)
     # print(sse)
     # print(avg_sse)
     return kmeans,word_dic_temp
-
-def prediction(reviews,kmeans,word_dic_temp):
-    start_time = time.time()
-    container_gram = []
-    review_to_train_data(reviews,container_gram,word_dic_temp)
-    fre_array = get_frequncy_array(container_gram)
-    result = kmeans.predict(fre_array)
-    return result
 #kmeans, word_dic_temp = main()
-#print(time.time() - start_time)
-
-#print(kmeans.cluster_centers_[0])
-# def filter_zero_centers_index(cluster_centers):
-#     result = []
-#     for i in cluster_centers:
-#         cluster_index = {}
-#         for j in range(len(i)):
-#             if i[j] != 0:
-#                 cluster_index[j] = i[j]
-#         result.append(cluster_index.copy())
-#     return result
-# non_zero_index_center = filter_zero_centers_index(kmeans.cluster_centers_)
-# #print(non_zero_index_center[1])
-# #print(len(non_zero_index_center[0]),len(non_zero_index_center[1]),len(non_zero_index_center[2]),len(non_zero_index_center[3]),len(non_zero_index_center[4]))
-#
-# def find_words_index(index_array):
-#     result = []
-#     for i in index_array:
-#         words = {}
-#         for key_i in i:
-#             for key in words_dic:
-#                 if words_dic[key] == key_i:
-#                     words[key] = i[key_i]
-#         result.append(words.copy())
-#     return result
-# feature_words = find_words_index(non_zero_index_center)
-# #print(len(feature_words[0]),len(feature_words[1]),len(feature_words[2]),len(feature_words[3]),len(feature_words[4]))
-# #print(feature_words[0])
-# # print(len(feature_words))
-#
-# def filter_feature_word(feature_words):
-#     f_pronoun_conj = open("Directionary/pronouns_and_conj.txt","r")
-#     pronoun_conj = f_pronoun_conj.read().splitlines()
-#     f_pronoun_conj.close()
-#     f_verb = open("Directionary/verbs/31K verbs.txt","r")
-#     verbs = f_verb.read().splitlines()
-#     f_verb.close()
-#     f_adverb = open("Directionary/adverbs/6K adverbs.txt","r")
-#     adverbs = f_adverb.read().splitlines()
-#     f_adverb.close()
-#     f_adj = open("Directionary/adjectives/28K adjectives.txt","r")
-#     adjs = f_adj.read().splitlines()
-#     f_adj.close()
-#     result = []
-#     for feature_list in feature_words:
-#         new_feature_list = {}
-#         for key in feature_list:
-#             if key.lower() not in pronoun_conj and key.lower() not in verbs and key.lower() not in adverbs and key.lower() not in adjs:
-#                 new_feature_list[key] = feature_list[key]
-#         result.append(new_feature_list.copy())
-#     return result
-#
-# filter_features = filter_feature_word(feature_words)
-# f_nk = open("features_words/six_k.txt",'w')
-# for feature in filter_features:
-#     for i in feature:
-#         f_nk.write(str(i) + "\n")
-#     f_nk.write("----------------------------------------------------------------------------------------\n")
-# f_nk.close()
-
 # print(time.time() - start_time)
 # print(prediction(txt,kmeans,word_dic_temp))
 
