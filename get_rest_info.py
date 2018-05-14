@@ -12,13 +12,17 @@ def get_rest_info(rest_info):
     if len(restaurants) == 0:
         rest_info["address"] = "Not Available"
         rest_info["phone"] = "Not Available"
+        rest_info["name"] = str(rest_info["name"])
+        rest_info["total_score"] = round((rest_info["total_score"] * 5),1)
         return rest_info
-    
+
     restaurant = restaurants[0]
 
-    address =  restaurant["location"]["display_address"][0] + restaurant["location"]["display_address"][1]
+    address =  restaurant["location"]["display_address"][0] + " " + restaurant["location"]["display_address"][1]
     phone = restaurant["phone"]
 
+    rest_info["name"] = str(rest_info["name"])
+    rest_info["total_score"] = round((rest_info["total_score"] * 5),1)
     rest_info["address"] = address
     rest_info["phone"] = phone
 
