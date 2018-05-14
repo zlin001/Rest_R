@@ -181,7 +181,7 @@ def main():
     # print(avg_sse)
     return kmeans,word_dic_temp
 
-kmeans, word_dic_temp = main()
+# kmeans, word_dic_temp = main()
 # def filter_zero_centers_index(cluster_centers):
 #     result = []
 #     for i in cluster_centers:
@@ -248,8 +248,8 @@ def prediction(reviews,kmeans,word_dic_temp):
     fre_array = get_frequncy_array(container_gram)
     result = kmeans.predict(fre_array)
     return result
-print(time.time() - start_time)
-print(prediction(txt,kmeans,word_dic_temp))
+# print(time.time() - start_time)
+# print(prediction(txt,kmeans,word_dic_temp))
 
 #print(filter_features[0])
 # print(len(feature_words[0]),len(feature_words[1]),len(feature_words[2]),len(feature_words[3]),len(feature_words[4]),len(feature_words[5]))
