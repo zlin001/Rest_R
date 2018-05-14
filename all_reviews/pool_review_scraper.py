@@ -43,15 +43,16 @@ def crawl_pages(all_restaraunts_init_data):
 
         for review in review_container:
             reviews_in_page.append((review.find('p').text))
+            # reviews_in_page.append("reviews in page")
 
         next_button = soup.findAll('a', attrs={'class': 'next'})
         count = count + 20
 
         elapsed_time = time.time() - crawl_start_time
 
-    review_name_text.append(base_url)
+    review_name_text.append(all_restaraunts_init_data[0])
     review_name_text.append(reviews_in_page)
-    review_name_text.append(all_restaraunts_init_data[1])
+    review_name_text.append(base_url)
 
 
     return review_name_text

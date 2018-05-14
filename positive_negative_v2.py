@@ -72,6 +72,8 @@ def score_reviews(array_word_tokens):
     # a container to contain the score
     score_container = []
     sum = 0
+    if len(array_word_tokens) == 0:
+        return score_container, 0
     #we loop them
     for i in range(len(array_word_tokens)):
         # call the positve popularity function
