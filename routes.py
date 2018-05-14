@@ -29,11 +29,11 @@ def top_ten_rests():
     # print(all_reviews)
     all_scores = get_all_scores(all_reviews)
     #print(all_scores)
-    each_score = get_each_scores(all_reviews)
-    add_score_array(all_reviews,each_score)
-    restaurants = all_prediction(all_reviews)
-    all_aspect_array = get_all_aspect(restaurants)
-    print(all_aspect_array)
+    # each_score = get_each_scores(all_reviews)
+    # add_score_array(all_reviews,each_score)
+    # restaurants = all_prediction(all_reviews)
+    # all_aspect_array = get_all_aspect(restaurants)
+    # print(all_aspect_array)
     top_10 = [{"rank": 1, "name": "Aria", "phone": 6461235344,"total_score": 3.3, "categories": {"taste": 3, "decor": 5, "style": 1.3}, "address": "135-34 booth memorial ave flushing ny 11355"}, {"rank": 1, "name": "Aria", "phone": 6461235344, "categories": {"taste": 3, "decor": 5, "style": 1.3}, "address": "135-34 booth memorial ave flushing ny 11355"}, {"rank": 1, "name": "Aria", "phone": 6461235344, "categories": {"taste": 3, "decor": 5, "style": 1.3}, "address": "135-34 booth memorial ave flushing ny 11355"}]
     return render_template("top_ten_rests.html", top_restaraunts=top_10, zip_code=zip_code)
 
