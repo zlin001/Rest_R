@@ -19,6 +19,7 @@ def top_ten_rests():
     all_scores = get_all_scores(all_reviews)
     all_scores_with_info = get_all_rest_info(all_scores)
 
+
     sorted_scores = sorted(all_scores_with_info, key=itemgetter('total_score'), reverse=True)
     # print(all_scores_with_info)
     top_10 = []
@@ -29,6 +30,7 @@ def top_ten_rests():
         count = count + 1
 
     return render_template("top_ten_rests.html", top_restaraunts=top_10, zip_code=zip_code)
+
 
 @app.route('/restaurant/<restaurant_info>')
 def restaurant(restaurant_info):
