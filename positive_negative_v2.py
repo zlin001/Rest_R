@@ -97,8 +97,9 @@ def all_scores(restuarant):
         array_word_tokens.append(word_tokens.copy())
     score_container, all_score = score_reviews(array_word_tokens)
     #print(all_score,restuarant)
-    result_all["name"] = restuarant[0]
+    result_all["name"] = restuarant[0].decode("utf-8")
     result_all["total_score"] = all_score
+    result_all["url"] = restuarant[2]
     return result_all
 
 # f_reviews = open("all_reviews/file_name30.txt","r",encoding="windows-1252")
@@ -122,8 +123,10 @@ def each_scores(restuarant):
         array_word_tokens.append(word_tokens.copy())
     score_container, all_score = score_reviews(array_word_tokens)
     #print(all_score,restuarant)
+    print("url", restaurant[2])
     result_all["name"] = restuarant[0]
     result_all["review_score"] = all_score
+    result_all["url"] = restaurant[2]
     return result_each
 
 def get_each_scores(restuarants):

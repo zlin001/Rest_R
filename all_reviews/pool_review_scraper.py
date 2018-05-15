@@ -52,8 +52,8 @@ def crawl_pages(all_restaraunts_init_data):
     review_name_text.append(all_restaraunts_init_data[0])
     review_name_text.append(reviews_in_page)
     review_name_text.append(base_url)
-
-
+    # 
+    # print(review_name_text[0],review_name_text[2])
     return review_name_text
 
 if __name__ == '__main__':

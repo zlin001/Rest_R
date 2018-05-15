@@ -21,5 +21,5 @@ def find_all_rests(zip_code):
 
         rest_urls.append(temp_rest)
 
-    print(rest_urls)
+    
     return rest_urls
