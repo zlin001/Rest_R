@@ -10,7 +10,7 @@ Home page frame:<br />
 
 Search result page frame:<br />
 
-![alt text](https://github.com/zlin001/Rest_R/blob/master/search_result_frame.png)
+![alt text](https://github.com/zlin001/Rest_R/blob/branch_new/search_result_frame.png)
 
 Kmean Algorthmn File: dict_k_mean.py
 
