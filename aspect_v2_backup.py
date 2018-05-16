@@ -148,15 +148,15 @@ f_reviews = open('all_reviews/file_name30.txt','r',encoding='windows-1252')
 # all review in one string
 all_review = f_reviews.read().splitlines()
 f_reviews.close()
-txt = [["name0",all_review,"url",kmeans,word_dic_temp],["name1",["I am good","I love the food"],"url",kmeans,word_dic_temp]]
-def run(restuarants):
+def run():
     kmeans, word_dic_temp = main()
-    each_score = get_each_scores(restuarants)
-    add_score_array(restuarants,each_score)
+    each_score = get_each_scores(txt)
+    add_score_array(txt,each_score)
+    txt = [["name0",all_review,"url",kmeans,word_dic_temp],["name1",["I am good","I love the food"],"url",kmeans,word_dic_temp]]
     #print(txt[0][5])
     #print(txt[1][5])
-    prediction_array = all_prediction(restuarants)
+    prediction_array = all_prediction(txt)
     result = get_all_aspect(prediction_array)
     return result
-test = run(txt)
+test = run()
 print(test)
