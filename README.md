@@ -6,7 +6,7 @@ Restaurant Reviews Classification System on Yelp
 [Member Meetings and Team Progress](https://github.com/arvin36987/Rest_R/edit/master/MeetingnProgess.md)
 
 Home page frame:<br />
-![alt text](https://github.com/zlin001/Rest_R/blob/master/home_page_frame.png)
+![alt text](https://github.com/zlin001/Rest_R/blob/branch_new/home_page_frame.png)
 
 Search result page frame:<br />
-![alt text](https://github.com/zlin001/Rest_R/blob/master/search_result_frame.png)
+![alt text](https://github.com/zlin001/Rest_R/blob/branch_new/search_result_frame.png)
