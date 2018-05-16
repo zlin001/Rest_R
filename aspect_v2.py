@@ -10,7 +10,7 @@ from all_reviews.pool_review_scraper import get_all_reviews
 from positive_negative_v2 import get_all_scores
 # previous steps are the same as aspect.py, the difference is get the average of ratios of each aspects and multpy with corresponding average aspect of center
 # and use that as threshold, and save the average of difference, and compare them to determine the aspect and calculate the score
-
+# try aspect_v2_back.py if this failed
 # input: none
 # output: a dictionary which each aspect containes their related words
 def load_related_words():
