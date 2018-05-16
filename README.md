@@ -1,4 +1,4 @@
-Rest_R
+# Rest_R
 
 
 ## Restaurant Reviews Classification System on Yelp
@@ -24,7 +24,8 @@ Rest_R
 
 [Member Meetings and Team Progress](https://github.com/arvin36987/Rest_R/edit/master/MeetingnProgess.md)
 
-Concept Map:<br />
+## Concept Map
+Home Page:<br />
 ![alt text](https://github.com/zlin001/Rest_R/blob/branch_new/home_page_frame.png)
 
 Search result page frame:<br />
