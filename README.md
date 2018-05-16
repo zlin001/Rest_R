@@ -3,6 +3,8 @@ Restaurant Reviews Classification System on Yelp
 
 [Final Design Presentation](https://docs.google.com/presentation/d/140vld0XzrDRSW93MdRXBa94WLy8G_UAS8YLDQMoFkTE/edit) (3/26/18)
 
+[Final System Presentation](https://docs.google.com/presentation/d/1wiPoMtNX8XEQhX1J7qYOq0e2xqsmNYtHoAFB9mppOzI/edit#slide=id.g37c0054219_3_7)
+
 [Member Meetings and Team Progress](https://github.com/arvin36987/Rest_R/edit/master/MeetingnProgess.md)
 
 Home page frame:<br />
