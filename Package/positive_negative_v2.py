@@ -112,11 +112,11 @@ def all_scores(restuarant):
     score_container, all_score = score_reviews(array_word_tokens)
     #print(all_score,restuarant)
     # need to mark each total to the name of restaurant
-    result_all["name"] = restuarant[0]
+    result_all["name"] = restuarant[0].decode("utf-8")
     # save the total score
     result_all["total_score"] = all_score
     # return result
-    result_all["url"] = restuarant[2] 
+    result_all["url"] = restuarant[2]
     return result_all
 
 # f_reviews = open("all_reviews/file_name30.txt","r",encoding="windows-1252")
