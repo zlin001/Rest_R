@@ -3,11 +3,11 @@ from dict_k_mean import main
 from dict_k_mean import prediction
 from multiprocessing import Pool
 from dict_k_mean import mofi_to_index
-from positive_negative_v2 import get_each_scores
+from Package.positive_negative_v2 import get_each_scores
 from dict_k_mean import all_prediction
-from closest_30_rests import find_all_rests
-from all_reviews.pool_review_scraper import get_all_reviews
-from positive_negative_v2 import get_all_scores
+from Package.closest_30_rests import find_all_rests
+from Package.pool_review_scraper import get_all_reviews
+from Package.positive_negative_v2 import get_all_scores
 # previous steps are the same as aspect.py, the difference is get the average of ratios of each aspects and multpy with corresponding average aspect of center
 # and use that as threshold, and save the average of difference, and compare them to determine the aspect and calculate the score
 # try aspect_v2_back.py if this failed
