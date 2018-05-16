@@ -30,6 +30,7 @@ def top_ten_rests():
     for rest in sorted_scores:
         if count < 10:
             top_10.append(rest)
+            print(rest["url"])
         count = count + 1
 
     return render_template("top_ten_rests.html", top_restaraunts=top_10, zip_code=zip_code)

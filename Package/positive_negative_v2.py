@@ -116,6 +116,7 @@ def all_scores(restuarant):
     # save the total score
     result_all["total_score"] = all_score
     # return result
+    result_all["url"] = restuarant[2] 
     return result_all
 
 # f_reviews = open("all_reviews/file_name30.txt","r",encoding="windows-1252")
