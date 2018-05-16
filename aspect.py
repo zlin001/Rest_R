@@ -3,9 +3,9 @@ from dict_k_mean import main
 from dict_k_mean import prediction
 from multiprocessing import Pool
 from dict_k_mean import mofi_to_index
-from positive_negative_v2 import get_each_scores
+from Package.positive_negative_v2 import get_each_scores
 from dict_k_mean import all_prediction
-from all_reviews.pool_review_scraper import get_all_reviews
+from Package.pool_review_scraper import get_all_reviews
 
 # this is the first type of calculation: filter based on the average of all the review split by aspect
 
