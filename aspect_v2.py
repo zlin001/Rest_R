@@ -3,11 +3,11 @@ from dict_k_mean import main
 from dict_k_mean import prediction
 from multiprocessing import Pool
 from dict_k_mean import mofi_to_index
-from Package.positive_negative_v2 import get_each_scores
 from dict_k_mean import all_prediction
 from Package.closest_30_rests import find_all_rests
+from Package.positive_negative_v2 import get_each_scores
+from dict_k_mean import all_prediction
 from Package.pool_review_scraper import get_all_reviews
-from Package.positive_negative_v2 import get_all_scores
 # previous steps are the same as aspect.py, the difference is get the average of ratios of each aspects and multpy with corresponding average aspect of center
 # and use that as threshold, and save the average of difference, and compare them to determine the aspect and calculate the score
 # try aspect_v2_back.py if this failed
@@ -268,6 +268,12 @@ def get_all_aspect(restuarants):
     # return result
     return result_all
 
+
+f_reviews = open('all_reviews/file_name30.txt','r',encoding='windows-1252')
+# all review in one string
+all_review = f_reviews.read().splitlines()
+f_reviews.close()
+txt = [["name0",["I am good","I love the food"],"url"],["name1",["I am good","I love the food"],"url"]]
 # main function to call
 # input a array of all restuarant
 # output: output the array of aspects of each restuarant
@@ -284,24 +290,7 @@ def run(restuarants):
     prediction_array = all_prediction(restuarants)
     # call the paralle to get the all aspects
     result = get_all_aspect(prediction_array)
-    print(get_all_reviews(restuarants))
     # result
     return result
-
-f_reviews = open('all_reviews/file_name30.txt','r',encoding='windows-1252')
-# all review in one string
-all_review_30 = f_reviews.read().splitlines()
-f_reviews.close()
-f_reviews = open('all_reviews/file_name0.txt','r',encoding='utf-8')
-# all review in one string
-all_review_0 = f_reviews.read().splitlines()
-f_reviews.close()
-
-txt = [["file_name30",all_review_30,"url"]]
-print(run(txt))
-# zip_code = 11355
-# all_restaurant_urls = find_all_rests(str(zip_code))
-# all_reviews = get_all_reviews(all_restaurant_urls)
-# #print(len(all_reviews))
-# result = run(all_reviews)
-# print(result)
+test = run(txt)
+print(test)
