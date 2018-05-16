@@ -2,12 +2,26 @@
 <html>
   <head>
     <link href="static/css/style2.css" type="text/css" rel="stylesheet">
+    <link href="http://s1.xiaomishu.com/b/css/min/base.v1204100040.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="http://s1.xiaomishu.com/b/css/min/res.v415131610.css" rel="stylesheet" type="text/css" media="all" />
+
     <title>The Top Ten Restaurants in {{zip_code}}</title>
   </head>
 
   <body>
   	<h1>Yelp Rating System</h1>
   	<h2>Top 10 restaurants in zip code: {{zip_code}}</h2>
+  		
+  		<!-- search again -->
+  		<div>
+            <form action="{{ url_for('top_ten_rests') }}" method="POST">
+              <br/>
+              <input name="zip_code" type="number">Enter zip code</textarea>
+              <br/>
+              <input type="submit" placeholder="Search again by zip code" value="Submit">
+            </form>
+
+          </div>
   	<table id="table_rest" class="table">
   		<thead>
   			<tr>
@@ -16,15 +30,25 @@
           <th>Graph</th>
   				<th>Address</th>
   				<th>Phone</th>
-          <th>Overall Score<th>
+          <th>Overall Score</th>
   			</tr>
   		</thead>
 
-		<!-insert restaurant data into the page table ->
+		<!-insert restaurant data into the page table and add symbol to top3 ->
   		<tbody>
       {% for restaurant in top_restaraunts %}
         <tr>
-          <td>{{loop.index}}</td>
+          <td class ="tc">
+          {% if loop.index == 1 %}
+          	<u class="top top1"></u>
+          {% elif loop.index == 2 %}
+          	<u class="top top2"></u>
+          {% elif loop.index == 3 %}
+          	<u class="top top3"></u>
+          {% else %}
+			{{loop.index}}
+		  {% endif %}</td>
+			
           <td><a href="{{ ''.join(['', restaurant["url"]]) }}">{{restaurant["name"]}}</a></td>
           <td><a href="{{ url_for('restaurant', restaurant_info=restaurant )}}">Graph</a></td>
           <td>{{restaurant["address"]}}</td>
