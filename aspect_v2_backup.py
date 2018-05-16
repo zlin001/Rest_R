@@ -3,8 +3,11 @@ from dict_k_mean import main
 from dict_k_mean import prediction
 from multiprocessing import Pool
 from dict_k_mean import mofi_to_index
-from positive_negative_v2 import get_each_scores
+from Package.positive_negative_v2 import get_each_scores
 from dict_k_mean import all_prediction
+from Package.closest_30_rests import find_all_rests
+from Package.pool_review_scraper import get_all_reviews
+from Package.positive_negative_v2 import get_all_scores
 def load_related_words():
     f = open("all_reviews/aspect.txt",'r',encoding="windows-1252")
     summary = f.read()
