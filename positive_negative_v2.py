@@ -8,6 +8,8 @@ from multiprocessing import Pool
 ;       Washington, USA,
 """
 # function: collecting the score for each review (postive and negative)
+# input: array_words: array of word, f_name: the file u want to check (positve or negative), f_inc/f_dec the file contained inc adverb/dec adverb
+# output: is the score of the negative or positive based on the input file, inv_score is the score that get converted by not or no
 def scan_popularity(array_words,f_name,f_inc,f_dec):
     # getting different words from folder that we need
     # postive word or negative word based on the input f_name
@@ -54,6 +56,8 @@ def scan_popularity(array_words,f_name,f_inc,f_dec):
             #print(word)
     return score, inv_score
 # this function does calculation of score
+# input: the score of postive, negative and inverted score from postiive and negative
+# output: return the rotios of postive score to sum of postive and negative
 def scoring_one(p_score,n_score,p_invi,n_invi):
     score = 0
     try:
@@ -67,7 +71,9 @@ def scoring_one(p_score,n_score,p_invi,n_invi):
     except ZeroDivisionError:
         score = 0
     return score
-#this is main function. Input the array word tokens and return score of each array and a final score
+# this is main function. Input the array word tokens and return score of each array and a final score
+# input: array of work that tokenizeself.
+# output: a array of score present each review, and one total score present this restaurant
 def score_reviews(array_word_tokens):
     # a container to contain the score
     score_container = []
@@ -89,46 +95,76 @@ def score_reviews(array_word_tokens):
 # review_score_containter_all = []
 # final_score_container_all = []
 
+# input: array of information of restaurant index 0 = name, 1 = array of reviews, 2 = url
+# output: a dictionary contained name and the total score
 def all_scores(restuarant):
+    # the output
     result_all = {}
+    # a array to contain all the tokenize review
     array_word_tokens = []
+    # loop each review
     for review in restuarant[1]:
+        # tokenize each review
         word_tokens = word_tokenize(review)
+        # add to array
         array_word_tokens.append(word_tokens.copy())
+    # call the score review to get the score
     score_container, all_score = score_reviews(array_word_tokens)
     #print(all_score,restuarant)
-    result_all["name"] = restuarant[0].decode("utf-8")
+    # need to mark each total to the name of restaurant
+    result_all["name"] = restuarant[0]
+    # save the total score
     result_all["total_score"] = all_score
-    result_all["url"] = restuarant[2]
+    # return result
     return result_all
 
 # f_reviews = open("all_reviews/file_name30.txt","r",encoding="windows-1252")
 # reviews = f_reviews.read().splitlines()
 # f_reviews.close()
 # text = [["abc",reviews],["god",["i am good student"]]]
+
+# this is parallel process to reduce the time
+# input is an array of containes all restaurant
+# output is an array of dictionary which contained all score and name
 def get_all_scores(restuarants):
+    # 31 is the threshold
     with Pool(31) as p:
+        # we map the function and input
         result_all = p.map(all_scores, restuarants)
+        # stop
         p.terminate()
+        # merge them
         p.join()
+    # return result
     return result_all
 # result_all = get_all_scores(text)
 # print(result_all)
 
+# input: array of information of restaurant index 0 = name, 1 = array of reviews, 2 = url
+# output: a dictionary contained name and the array of score to each review
 def each_scores(restuarant):
+    # the output
     result_each = {}
+    # array of work tokenized
     array_word_tokens = []
+    # loop each review
     for review in restuarant[1]:
+        # tokenize each review
         word_tokens = word_tokenize(review)
+        # add them into array
         array_word_tokens.append(word_tokens.copy())
+    # call the function of score review
     score_container, all_score = score_reviews(array_word_tokens)
     #print(all_score,restuarant)
-    print("url", restaurant[2])
-    result_all["name"] = restuarant[0]
-    result_all["review_score"] = all_score
-    result_all["url"] = restaurant[2]
+    # save the name of restuarant
+    result_each["name"] = restuarant[0]
+    # save the array of score of each review
+    result_each["review_score"] = score_container
+    # return result
     return result_each
 
+# this is same as get_all_scores, but it called the each scores
+# to get the parallel process to run each scores of all restaurant
 def get_each_scores(restuarants):
     with Pool(31) as p:
         result_each = p.map(each_scores, restuarants)
