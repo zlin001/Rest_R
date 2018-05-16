@@ -284,7 +284,7 @@ def run(restuarants):
     prediction_array = all_prediction(restuarants)
     # call the paralle to get the all aspects
     result = get_all_aspect(prediction_array)
-     print(get_all_reviews(restuarants))
+    print(get_all_reviews(restuarants))
     # result
     return result
 
