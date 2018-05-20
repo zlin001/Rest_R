@@ -18,11 +18,11 @@
 
 
 ## System Improvement Presentation
-[Final Design Presentation](https://docs.google.com/presentation/d/140vld0XzrDRSW93MdRXBa94WLy8G_UAS8YLDQMoFkTE/edit) (3/26/18)
+[Final Design Presentation](https://github.com/arvin36987/Rest_R/blob/branch_new/presentation_n_reports/Senior%20Design%20Report.pptx) (3/26/18)
 
-[Final System Presentation](https://docs.google.com/presentation/d/1wiPoMtNX8XEQhX1J7qYOq0e2xqsmNYtHoAFB9mppOzI/edit#slide=id.g37c0054219_3_7) (5/16/18)
+[Final System Presentation](https://github.com/arvin36987/Rest_R/blob/branch_new/presentation_n_reports/Final%20System%20Presentation.pptx) (5/16/18)
 
-[Member Meetings and Team Progress](https://github.com/arvin36987/Rest_R/edit/master/MeetingnProgess.md)
+[Member Meetings and Team Progress](https://github.com/arvin36987/Rest_R/blob/branch_new/MeetingnProgess.md)
 
 ## Concept Map
 Home Page:<br />
